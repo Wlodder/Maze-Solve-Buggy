@@ -1,8 +1,11 @@
 ﻿  Source.cpp
-c:\users\wolodya\documents\c++ projects\window_test\project1\utils.h(49): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\wolodya\documents\c++ projects\window_test\project1\source.cpp(63): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
-c:\users\wolodya\documents\c++ projects\window_test\project1\source.cpp(66): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
-c:\users\wolodya\documents\c++ projects\window_test\project1\source.cpp(79): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\wolodya\documents\c++ projects\window_test\project1\source.cpp(82): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\wolodya\documents\c++ projects\window_test\project1\source.cpp(109): warning C4018: '<': signed/unsigned mismatch
+c:\users\wolodya\documents\c++ projects\window_test\project1\utils.h(42): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\wolodya\documents\c++ projects\window_test\project1\source.cpp(76): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+c:\users\wolodya\documents\c++ projects\window_test\project1\source.cpp(79): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+c:\users\wolodya\documents\c++ projects\window_test\project1\source.cpp(92): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\wolodya\documents\c++ projects\window_test\project1\source.cpp(95): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\wolodya\documents\c++ projects\window_test\project1\source.cpp(127): warning C4018: '<': signed/unsigned mismatch
+  Utils.cpp
+c:\users\wolodya\documents\c++ projects\window_test\project1\utils.h(42): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
   Project1.vcxproj -> C:\Users\Wolodya\Documents\C++ projects\Window_test\Debug\Project1.exe

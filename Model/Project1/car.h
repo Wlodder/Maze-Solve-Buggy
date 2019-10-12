@@ -53,7 +53,6 @@ public:
 	void rotateBody(float angle);
 	void move(bool forwards);
 	void rotate(float angle) { this->rotVelocity(angle); this->rotateBody(angle); this->rotateLines(angle); };
-	void checkDistance(collisionObj* obj);
 	
 	~car();
 };

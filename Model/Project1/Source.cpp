@@ -25,13 +25,19 @@ int main()
 	sf::Vector2f rectSize(50.f, 100.f);
 	sf::Vector2f velocityVector(0.f,0.1f);
 	sf::RectangleShape rect(rectSize);
-	sf::RectangleShape col(sf::Vector2f(10,50));
-	col.setPosition(20, 30);
-	sf::RectangleShape line(sf::Vector2f (5.f, 250.f));
+	sf::RectangleShape col(sf::Vector2f(100,250));
+	col.setFillColor(sf::Color::Magenta);
+	col.setPosition(20, 300);
+	sf::RectangleShape line(sf::Vector2f (1.f, 250.f));
+	sf::RectangleShape linePerpendicular(sf::Vector2f(1.f, 250.f));
 	sf::Vector2f lineBase = rect.getOrigin();
 	sf::Vector2f testVec(10, 10);
-	visionLine visionLine(line, testVec, 0);
+	sf::Vector2f testVecPerpen(10, 10);
+	::visionLine visionLine(line, testVec, 0);
+	::visionLine visionLinePerpen(linePerpendicular, testVecPerpen, 0);
 	sf::Vector2f center(windowHeight/2, windowWidth/2);
+	linePerpendicular.setPosition(center);
+	linePerpendicular.setRotation(270);
 	line.setPosition(center);
 	rect.setPosition(center);
 	rect.setOrigin(rectSize / 2.f);
@@ -42,17 +48,24 @@ int main()
 	collisionObj block(col);
 	block.setPosition(100, 200);
 	myCar.addLine(visionLine);
+	myCar.addLine(visionLinePerpen);
 	rect.setFillColor(sf::Color::Blue);
-
+	Utils::addvLine(visionLine);
+	Utils::addvLine(visionLinePerpen);
 	// collision thread
-	//std::thread collisionDetectThread(&Utils::checkCollision,std::ref(block),std::ref(visionLine));
+	// std::thread collisionDetectThread(&Utils::checkCollision,std::ref(block),std::ref(visionLine));
 
 	// main loop
 	while (window.isOpen())
 	{
-		std::thread collisionDetectThread(&Utils::checkCollision,
-			std::ref(block), std::ref(visionLine), std::ref(myCar));
-		std::thread distanceDetectThread(&Utils::findRelativeDistance, std::ref(block), std::ref(myCar));
+		std::thread collisionDetectThreadForward(&Utils::checkCollision,
+			std::ref(block), std::ref(visionLine));
+		std::thread distanceDetectThreadForward(&Utils::findRelativeDistance, std::ref(block),
+			std::ref(myCar), std::ref(visionLine));
+		std::thread collisionDetectThreadPerpen(&Utils::checkCollision,
+			std::ref(block), std::ref(visionLinePerpen));
+		std::thread distanceDetectThreadPerpen(&Utils::findRelativeDistance, std::ref(block),
+			std::ref(myCar), std::ref(visionLinePerpen));
 		sf::Event event;
 		// polling window constantly
 		while (window.pollEvent(event))
@@ -102,8 +115,13 @@ int main()
 		// draw car
 		window.draw(*(myCar.getBody()));
 		window.draw(block);
-		collisionDetectThread.join();
-		distanceDetectThread.join();
+		collisionDetectThreadForward.join();
+		distanceDetectThreadForward.join();
+
+		collisionDetectThreadPerpen.join();
+		distanceDetectThreadPerpen.join();
+
+		Utils::printDistances();
 
 		// draw car's vision lines
 		for (int i = 0; i < myCar.getLines().size(); i++)

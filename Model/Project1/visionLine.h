@@ -11,6 +11,8 @@ class visionLine : sf::RectangleShape
 	sf::Vector2f* pos;
 
 	// current angle of the line , 0' is upwards, measured in degrees
+	int distance = -1;
+	bool isDetecting = false;
 	float angle;
 public:
 	// constructor
@@ -21,7 +23,11 @@ public:
 	void setPos(sf::Vector2f& newPos) { pos = &newPos; };
 	sf::Vector2f* getPos() { return this->pos; };
 	sf::RectangleShape* getShape() { return this->shape; };
-	void link(sf::RectangleShape& l);
+
+	void setDistance(int newDis) { this->distance = newDis; };
+	bool getDetecting() { return isDetecting; };
+	void setDetecting(bool newStatus) { this->isDetecting = newStatus; };
+	int getDistance() { return this->distance; };
 	// destructor
 	~visionLine();
 };
