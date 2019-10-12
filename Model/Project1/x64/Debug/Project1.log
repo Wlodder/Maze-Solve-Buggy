@@ -1,0 +1,10 @@
+﻿  car.cpp
+c:\users\wolodya\documents\c++ projects\window_test\project1\car.h(3): error C2653: 'sf': is not a class or namespace name
+c:\users\wolodya\documents\c++ projects\window_test\project1\car.h(3): error C2504: 'RectangleShape': base class undefined
+c:\users\wolodya\documents\c++ projects\window_test\project1\car.h(5): error C2653: 'sf': is not a class or namespace name
+c:\users\wolodya\documents\c++ projects\window_test\project1\car.h(5): error C3646: 'velocity': unknown override specifier
+c:\users\wolodya\documents\c++ projects\window_test\project1\car.h(5): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\users\wolodya\documents\c++ projects\window_test\project1\car.cpp(2): fatal error C1083: Cannot open include file: 'SFML/Graphics/RectangleShape.hpp': No such file or directory
+  Source.cpp
+c:\users\wolodya\documents\c++ projects\window_test\project1\source.cpp(1): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Generating Code...
