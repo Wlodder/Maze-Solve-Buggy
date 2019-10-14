@@ -11,7 +11,7 @@ class visionLine : sf::RectangleShape
 	sf::Vector2f* pos;
 
 	// current angle of the line , 0' is upwards, measured in degrees
-	int distance = -1;
+	unsigned int distance = INT_MAX;
 	bool isDetecting = false;
 	float angle;
 public:

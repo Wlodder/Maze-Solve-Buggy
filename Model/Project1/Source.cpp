@@ -25,9 +25,18 @@ int main()
 	sf::Vector2f rectSize(50.f, 100.f);
 	sf::Vector2f velocityVector(0.f,0.1f);
 	sf::RectangleShape rect(rectSize);
+
+	// collision objects
 	sf::RectangleShape col(sf::Vector2f(100,250));
 	col.setFillColor(sf::Color::Magenta);
 	col.setPosition(20, 300);
+	collisionObj block(col);
+
+	sf::RectangleShape col2(sf::Vector2f(200, 25));
+	col2.setFillColor(sf::Color::Yellow);
+	col2.setPosition(100, 100);
+	collisionObj block2(col2);
+
 	sf::RectangleShape line(sf::Vector2f (1.f, 250.f));
 	sf::RectangleShape linePerpendicular(sf::Vector2f(1.f, 250.f));
 	sf::Vector2f lineBase = rect.getOrigin();
@@ -45,27 +54,33 @@ int main()
 	sf::RectangleShape* myBody = &rect;
 	sf::Vector2f* velo = &velocityVector;
 	car myCar(velo, myBody);
-	collisionObj block(col);
 	block.setPosition(100, 200);
 	myCar.addLine(visionLine);
 	myCar.addLine(visionLinePerpen);
 	rect.setFillColor(sf::Color::Blue);
 	Utils::addvLine(visionLine);
 	Utils::addvLine(visionLinePerpen);
+	Utils::addObject(block);
+	Utils::addObject(block2);
 	// collision thread
 	// std::thread collisionDetectThread(&Utils::checkCollision,std::ref(block),std::ref(visionLine));
 
 	// main loop
 	while (window.isOpen())
 	{
+		// 1 : 2 thread calcs to distance
+		/*
 		std::thread collisionDetectThreadForward(&Utils::checkCollision,
 			std::ref(block), std::ref(visionLine));
-		std::thread distanceDetectThreadForward(&Utils::findRelativeDistance, std::ref(block),
-			std::ref(myCar), std::ref(visionLine));
 		std::thread collisionDetectThreadPerpen(&Utils::checkCollision,
 			std::ref(block), std::ref(visionLinePerpen));
+		std::thread distanceDetectThreadForward(&Utils::findRelativeDistance, std::ref(block),
+			std::ref(myCar), std::ref(visionLine));
 		std::thread distanceDetectThreadPerpen(&Utils::findRelativeDistance, std::ref(block),
-			std::ref(myCar), std::ref(visionLinePerpen));
+			std::ref(myCar), std::ref(visionLinePerpen));*/
+		
+		std::thread collisionDetectThread(&Utils::findAllCollisions);
+
 		sf::Event event;
 		// polling window constantly
 		while (window.pollEvent(event))
@@ -115,11 +130,14 @@ int main()
 		// draw car
 		window.draw(*(myCar.getBody()));
 		window.draw(block);
-		collisionDetectThreadForward.join();
-		distanceDetectThreadForward.join();
-
-		collisionDetectThreadPerpen.join();
-		distanceDetectThreadPerpen.join();
+		window.draw(block2);
+		//collisionDetectThreadForward.join();
+		//distanceDetectThreadForward.join();
+		collisionDetectThread.join();
+		//collisionDetectThreadPerpen.join();
+		//distanceDetectThreadPerpen.join();
+		std::thread distanceThread(&Utils::findAllDistances, std::ref(myCar));
+		distanceThread.join();
 
 		Utils::printDistances();
 
