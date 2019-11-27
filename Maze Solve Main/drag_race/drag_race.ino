@@ -9,16 +9,12 @@
 // other variables
 int localDistance;
 // Pin variables
-/* Motor - 1 - right motor set
- * in_1 speed in the forward direction 
- * out_1 speed in the other direction
- * Motor - 2 - right motor set
- * in_2 speed in the forward direction 
- * out_2 speed in the other direction
-*/
-const int in_1 = 5, out_1 = 6;
-const int out_2 = 9, in_2 = 3;
-const int ena = 13, enb = 12;
+const int in_1 = 5;
+const int out_1 = 6;
+const int out_2 = 9;
+const int in_2 = 3;
+const int ena = 13;
+const int enb = 12;
 const int echoPin1 = 10;
 const int pingPin1 = 7;
 const int echoPin2 = 4;
@@ -35,8 +31,7 @@ const int rightwheelspeed = 250;
 
 void setup(){
 
-  p = values;
-  // setting the pins with input and outputs
+  p = &values[0];
   pinMode(echoPin1, INPUT);
   pinMode(pingPin1, OUTPUT);
   pinMode(echoPin2, INPUT);
@@ -68,25 +63,13 @@ void loop() {
 
   // sensing the distance
   pingboth(pingPin1, echoPin1, pingPin2, echoPin2);
-  // for debugging
   Serial.print("Difference right sensor : ");
   Serial.print(values[0]);
   Serial.print("  ");
   Serial.print("Front sensor value : ");
   Serial.println(values[1]);
-  // values[1] : front sensor distance
-  // values[0] : change in distance 
-  moveForward();
-  if(values[0] > 0)
-  {
-    moveLeft();
-    delay(1000);
-  }
-  else if(values[0] > 0)
-  {
-    moveRight();
-    delay(1000);
-  }
+  // values[1] = front sensor distance
+  // values[0] change in distance 
   moveForward();
   delay(50);
  
@@ -161,35 +144,11 @@ void resetSensor(){
 
 
 void moveForward () {
-  analogWrite(in_1,100);
+  analogWrite(in_1,leftwheelspeed);
   analogWrite(out_1,0);
   // left wheels
   analogWrite(out_2,0);
-  analogWrite(in_2,100);
-}
-
-void moveForward (int leftWheelSpeed, int rightWheelSpeed) {
-  if(leftWheelSpeed >= 0)
-  {
-    analogWrite(in_1,leftWheelSpeed);
-    analogWrite(out_1,0);
-  }
-  else
-  {
-    analogWrite(in_1,0);
-    analogWrite(out_1,abs(leftWheelSpeed));
-  }
-
-  if(rightWheelSpeed >= 0)
-  {
-    analogWrite(in_2,rightWheelSpeed);
-    analogWrite(out_2,0);
-  }
-  else
-  {
-    analogWrite(in_2,0);
-    analogWrite(out_2,abs(rightWheelSpeed));
-  }
+  analogWrite(in_2,rightwheelspeed);
 }
 
 void stopMotors(){
@@ -197,12 +156,4 @@ void stopMotors(){
   analogWrite(in_1,0);
   analogWrite(out_2,0);
   analogWrite(in_2,0);
-}
-
-void moveLeft(int amplitude){
-  moveForward(100,100);
-}
-
-void moveRight(int amplitude){
-  moveForward(-100,-100);
 }
