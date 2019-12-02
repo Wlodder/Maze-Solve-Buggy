@@ -162,11 +162,11 @@ void resetSensor(){
 
 
 void moveForward () {
-  analogWrite(in_1,100);
+  analogWrite(in_1,rightwheelspeed);
   analogWrite(out_1,0);
   // left wheels
   analogWrite(out_2,0);
-  analogWrite(in_2,100);
+  analogWrite(in_2,leftwheelspeed);
 }
 
 void moveForward (int leftWheelSpeed, int rightWheelSpeed) {
@@ -201,9 +201,9 @@ void stopMotors(){
 }
 
 void moveLeft(int amplitude){
-  moveForward(100,100);
+  moveForward(105,100);
 }
 
 void moveRight(int amplitude){
-  moveForward(-100,-100);
+  moveForward(-105,-100);
 }
