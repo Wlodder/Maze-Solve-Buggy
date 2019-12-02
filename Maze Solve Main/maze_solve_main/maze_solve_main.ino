@@ -77,12 +77,13 @@ void loop() {
   // values[1] : front sensor distance
   // values[0] : change in distance 
   moveForward();
-  if(values[0] > 0)
+  
+  if(values[0] == 0)
   {
     moveLeft();
     delay(1000);
   }
-  else if(values[0] < 0)
+  else
   {
     moveRight();
     delay(1000);
