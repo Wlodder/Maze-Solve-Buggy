@@ -82,7 +82,7 @@ void loop() {
     moveLeft();
     delay(1000);
   }
-  else if(values[0] > 0)
+  else if(values[0] < 0)
   {
     moveRight();
     delay(1000);
